@@ -2,13 +2,13 @@
    
   <h1>nih-box 📦</h1>
   
-  **_Archive projects, metadata, and files at Box@NIH_**
+  **_Archive projects, metadata, and files at [Box@NIH](https://nih.box.com)_**
 
-  [![tests](https://github.com/OpenOmics/nih-box/workflows/tests/badge.svg)](https://github.com/OpenOmics/bx/actions/workflows/main.yaml) [![docs](https://github.com/OpenOmics/nih-box/workflows/docs/badge.svg)](https://github.com/OpenOmics/nih-box/actions/workflows/docs.yml) [![GitHub issues](https://img.shields.io/github/issues/OpenOmics/nih-box?color=brightgreen)](https://github.com/OpenOmics/nih-box/issues)  [![GitHub license](https://img.shields.io/github/license/OpenOmics/nih-box)](https://github.com/OpenOmics/nih-box/blob/main/LICENSE) 
+  [![tests](https://github.com/OpenOmics/nih-box/workflows/tests/badge.svg)](https://github.com/OpenOmics/nih-box/actions/workflows/main.yaml) [![docs](https://github.com/OpenOmics/nih-box/workflows/docs/badge.svg)](https://github.com/OpenOmics/nih-box/actions/workflows/docs.yml) [![GitHub issues](https://img.shields.io/github/issues/OpenOmics/nih-box?color=brightgreen)](https://github.com/OpenOmics/nih-box/issues)  [![GitHub license](https://img.shields.io/github/license/OpenOmics/nih-box)](https://github.com/OpenOmics/nih-box/blob/main/LICENSE) 
   
-  <i>
-    This is the home of the [Box@NIH](https://nih.box.com/) command-line tool, [bx](https://github.com/OpenOmics/nih-box). Its long-term goals: to enable [FAIR<sup>1</sup>](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4792175/) scientific research, to archive and share project data, and to create a unified tool that makes using Box easier than ever before!
-  </i>
+
+_This is the home of the command-line tool, [bx](https://github.com/OpenOmics/nih-box). Its long-term goals: to enable [FAIR<sup>1</sup>](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4792175/) scientific research, to archive and share project data, and to create a unified tool that makes using Box easier than ever before!_
+
 </div>
 
 ## Overview
