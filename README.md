@@ -31,7 +31,7 @@ For more information about issues or trouble-shooting a problem, please checkout
 ## Dependencies
 **Requires:** `python>=3.8`  
 
-At the current moment, the only dependency is python! Please install a version of python greater than or equal to _3.8_. Any missing python requirements can be installed with the _requirements.txt_.
+At the current moment, the only dependency is python! Please install a version of python greater than or equal to _3.8_. Any missing python requirements can be installed with the [requirements.txt](https://github.com/OpenOmics/nih-box/blob/main/requirements.txt).
 
 ## Installation
 Please clone this repository to your local filesystem using the following command:
