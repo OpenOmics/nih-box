@@ -1,15 +1,26 @@
 <div align="center">
-   
-  <h1>nih-box 📦</h1>
-  
-  **_Archive projects, metadata, and files at Box@NIH_**
 
-  [![tests](https://github.com/OpenOmics/nih-box/workflows/tests/badge.svg)](https://github.com/OpenOmics/bx/actions/workflows/main.yaml) [![docs](https://github.com/OpenOmics/nih-box/workflows/docs/badge.svg)](https://github.com/OpenOmics/nih-box/actions/workflows/docs.yml) [![GitHub issues](https://img.shields.io/github/issues/OpenOmics/nih-box?color=brightgreen)](https://github.com/OpenOmics/nih-box/issues)  [![GitHub license](https://img.shields.io/github/license/OpenOmics/nih-box)](https://github.com/OpenOmics/nih-box/blob/main/LICENSE) 
-  
-  <i>
-    This is the home of the [Box@NIH](https://nih.box.com/) command-line tool, [bx](https://github.com/OpenOmics/nih-box). Its long-term goals: to enable [FAIR<sup>1</sup>](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4792175/) scientific research, to archive and share project data, and to create a unified tool that makes using Box easier than ever before!
-  </i>
-</div>
+  <h1 style="font-size: 250%">nih-box 🗃️</h1>
+
+  <b><i>Archive, share, and explore projects and files on Box@NIH</i></b><br> 
+  <a href="https://github.com/OpenOmics/nih-box/actions/workflows/main.yaml">
+    <img alt="tests" src="https://github.com/OpenOmics/nih-box/workflows/tests/badge.svg">
+  </a>
+  <a href="https://github.com/OpenOmics/nih-box/actions/workflows/docs.yml">
+    <img alt="docs" src="https://github.com/OpenOmics/nih-box/workflows/docs/badge.svg">
+  </a>
+  <a href="https://github.com/OpenOmics/nih-box/issues">
+    <img alt="GitHub issues" src="https://img.shields.io/github/issues/OpenOmics/nih-box?color=brightgreen">
+  </a>
+  <a href="https://github.com/OpenOmics/nih-box/blob/main/LICENSE">
+    <img alt="GitHub license" src="https://img.shields.io/github/license/OpenOmics/nih-box">
+  </a>
+
+  <p>
+    This is the home of the command-line tool, bx. Its long-term goals: to enable FAIR<sup>1</sup> scientific research, to archive and share project data, and to create a unified tool that makes using Box easier than ever before!
+  </p>
+
+</div>  
 
 ## Overview
 Welcome to bx! Before getting started, we highly recommend reading through [bx's documentation](https://openomics.github.io/nih-box/).
@@ -31,7 +42,7 @@ For more information about issues or trouble-shooting a problem, please checkout
 ## Dependencies
 **Requires:** `python>=3.8`  
 
-At the current moment, the only dependency is python! Please install a version of python greater than or equal to _3.8_. Any missing python requirements can be installed with the _requirements.txt_.
+At the current moment, the only dependency is python! Please install a version of python greater than or equal to _3.8_. Any missing python requirements can be installed with the [requirements.txt](https://github.com/OpenOmics/nih-box/blob/main/requirements.txt).
 
 ## Contribute 
 This site is a living document, created for and by members like you. **bx** is maintained by the members of OpenOmics and is improved by continous feedback! We encourage you to contribute new content and make improvements to existing content via pull request to our [GitHub repository](https://github.com/OpenOmics/nih-box).
