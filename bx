@@ -1,0 +1,506 @@
+#!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
+
+"""
+ABOUT: This is the main entry for the pipeline.
+REQUIRES:
+  - python>=3.8
+    - boxsdk
+DISCLAIMER:
+                    PUBLIC DOMAIN NOTICE
+        NIAID Collaborative Bioinformatics Resource (NCBR)
+   National Institute of Allergy and Infectious Diseases (NIAID)
+This software/database is a "United  States Government Work" under
+the terms of the United  States Copyright Act.  It was written as 
+part of the author's official duties as a United States Government
+employee and thus cannot be copyrighted. This software is freely
+available to the public for use.
+Although all  reasonable  efforts have been taken  to ensure  the
+accuracy and reliability of the software and data, NCBR do not and
+cannot warrant the performance or results that may  be obtained by 
+using this software or data. NCBR and NIH disclaim all warranties,
+express  or  implied,  including   warranties   of   performance, 
+merchantability or fitness for any particular purpose.
+Please cite the author and NIH resources like the "Biowulf Cluster" 
+in any work or product based on this material.
+USAGE:
+  $ bx <command> [OPTIONS]
+EXAMPLE:
+  $ bx ls *.R?.fastq.gz
+"""
+
+# Python standard library
+from __future__ import print_function
+import sys, os, subprocess, json, textwrap
+import argparse  # added in python/3.5
+
+# 3rd party imports from pypi
+# import boxsdk
+
+# Local imports
+from src import version 
+from src.shells import bash 
+from src.utils import (
+    Colors,
+    err,
+    exists,
+    fatal,
+    permissions,
+    require
+)
+
+
+# Pipeline Metadata
+__version__ = version
+__authors__ = 'Skyler Kuhn'
+__email__ = 'skyler.kuhn@nih.gov'
+__home__  =  os.path.dirname(os.path.abspath(__file__))
+_name = os.path.basename(sys.argv[0])
+_description = 'Archive and manage data on Box@NIH.'
+
+
+def ls(sub_args):
+    """List files and directories on Box.
+    @param sub_args <parser.parse_args() object>:
+        Parsed arguments for run sub-command
+    """
+    print(sub_args)
+    fatal('NotImplementedError... Comming Soon!')
+
+
+def cd(sub_args):
+    """Change working directories on Box.
+    @param sub_args <parser.parse_args() object>:
+        Parsed arguments for run sub-command
+    """
+    print(sub_args)
+    fatal('NotImplementedError... Comming Soon!')
+
+
+def cp(sub_args):
+    """Copy files and directories to/from Box.
+    @param sub_args <parser.parse_args() object>:
+        Parsed arguments for run sub-command
+    """
+    print(sub_args)
+    fatal('NotImplementedError... Comming Soon!')
+
+
+def mkdir(sub_args):
+    """Make a new directory on Box.
+    @param sub_args <parser.parse_args() object>:
+        Parsed arguments for run sub-command
+    """
+    print(sub_args)
+    fatal('NotImplementedError... Comming Soon!')
+
+
+def rm(sub_args):
+    """Remove files or directories on Box.
+    @param sub_args <parser.parse_args() object>:
+        Parsed arguments for run sub-command
+    """
+    print(sub_args)
+    fatal('NotImplementedError... Comming Soon!')
+
+ 
+def parsed_arguments(name, description):
+    """Parses user-provided command-line arguments. Requires argparse and textwrap
+    package. argparse was added to standard lib in python 3.5 and textwrap was added
+    in python 3.5. To create custom help formatting for subparsers a docstring is
+    used create the help message for required options. argparse does not support named
+    subparser groups, which is normally what would be used to accomphish this reformatting.
+    As so, the help message for require options must be suppressed. If a new required arg
+    is added to a subparser, it must be added to the docstring and the usage statement
+    also must be updated.
+    @param name <str>:
+        Name of the pipeline or command-line tool 
+    @param description <str>:
+        Short description of pipeline or command-line tool 
+    """
+    # Add styled name and description
+    c = Colors
+    styled_name = "{0}{1}{2}bx{3}".format(c.bold, c.bg_black, c.cyan, c.end)
+    description = "{0}{1}{2}".format(c.bold, description, c.end)
+
+    # Create a top-level parser
+    parser = argparse.ArgumentParser(description = '{}: {}'.format(styled_name, description))
+
+    # Adding Verison information
+    parser.add_argument('--version', action = 'version', version='%(prog)s {}'.format(__version__))
+
+    # Create sub-command parser
+    subparsers = parser.add_subparsers(help='List of available sub-commands')
+
+    # Sub-parser for the "ls" sub-command
+    required_ls_options = textwrap.dedent("""\
+        {0}: {1}
+
+        {3}{4}Synopsis:{5} List Box directory contents.
+          $ {2} ls [-h] path [path ...]
+
+        Optional arguments are shown in square brackets above.
+
+        {3}{4}Description:{5}
+          List information about files and directories on Box. This command
+        allows you to get more information about files and directory that are 
+        located remotely on Box. By default, all the files and directories in 
+        the current working directory are listed.   
+        
+        {3}{4}Positional arguments:{5}
+          path              File(s) or directories to list the contents.
+                            Remote files and directories on Box need to 
+                            be prefixed with 'box:'. By default, the 
+                            contents of your current working directory
+                            are displayed. Please use 'bx cd' command
+                            to change working directories.
+                              Example: box:/NCBR_Archive
+
+        {3}{4}Options:{5}
+          -h, --help        Show usage and help information.
+                              Example: --help
+        """.format(styled_name, description, name, c.bold, c.url, c.end, c.italic))
+
+    # Display example usage in epilog
+    ls_epilog = textwrap.dedent("""\
+        {2}{3}Example:{4}
+          # List Box directory contents
+          ./{0} ls box:/NCBR_Archive
+
+        {2}{3}Version:{4}
+          {1}
+        """.format(name, __version__, c.bold, c.url, c.end))
+
+    # Supressing help message of required args to overcome no sub-parser named groups
+    subparser_ls = subparsers.add_parser(
+        'ls',
+        help = 'List Box directory contents.',
+        usage = argparse.SUPPRESS,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        description = required_ls_options,
+        epilog  = ls_epilog,
+        add_help=False
+    )
+
+    # Required Positional Arguments
+    # Input files/directories on Box
+    # to list the contents of 
+    subparser_ls.add_argument(
+        'path',
+        nargs = '+',
+        help = argparse.SUPPRESS
+    )
+
+    # Optional Arguments
+    # Add custom help message
+    subparser_ls.add_argument(
+        '-h', '--help', 
+        action='help', 
+        help=argparse.SUPPRESS
+    )
+
+    # Sub-parser for the "cd" sub-command
+    required_cd_options = textwrap.dedent("""\
+        {0}: {1}
+
+        {3}{4}Synopsis:{5} Change Box working directories.
+          $ {2} cd [-h] path
+
+        Optional arguments are shown in square brackets above.
+
+        {3}{4}Description:{5}
+          Changes the current working directory on Box. This command 
+        allows for interactive exploration of files and directories on 
+        the platform, and it pairs well with the 'bx ls' command. When 
+        these two commands are used together to makes getting more info-
+        rmation fast and easy! 
+        
+        {3}{4}Positional arguments:{5}
+          path              Changes your current working directory. 
+                            Please note that remote directories on Box
+                            need to be prefixed with 'box:'.
+                              Example: box:/NCBR_Archive
+
+        {3}{4}Options:{5}
+          -h, --help        Show usage and help information.
+                              Example: --help
+        """.format(styled_name, description, name, c.bold, c.url, c.end, c.italic))
+
+    # Display example usage in epilog
+    cd_epilog = textwrap.dedent("""\
+        {2}{3}Example:{4}
+          # Change working directories on Box
+          ./{0} cd box:/NCBR_Archive
+
+        {2}{3}Version:{4}
+          {1}
+        """.format(name, __version__, c.bold, c.url, c.end))
+
+    # Supressing help message of required args to overcome no sub-parser named groups
+    subparser_cd = subparsers.add_parser(
+        'cd',
+        help = 'Change Box working directories.',
+        usage = argparse.SUPPRESS,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        description = required_cd_options,
+        epilog  = cd_epilog,
+        add_help=False
+    )
+
+    # Required Positional Arguments
+    # Change to this directory on Box
+    subparser_cd.add_argument(
+        'path',
+        nargs = 1,
+        help = argparse.SUPPRESS
+    )
+
+    # Optional Arguments
+    # Add custom help message
+    subparser_cd.add_argument(
+        '-h', '--help', 
+        action='help', 
+        help=argparse.SUPPRESS
+    )
+
+    # Sub-parser for the "cp" sub-command
+    required_cp_options = textwrap.dedent("""\
+        {0}: {1}
+
+        {3}{4}Synopsis:{5} Copy files and directories to/from Box.
+          $ {2} cp [-h] source [soure ...] destination
+
+        Optional arguments are shown in square brackets above.
+
+        {3}{4}Description:{5}
+          Copy local/remote files or folders to/from Box. This command 
+        allows you to upload or download files or directories that are 
+        located on the platform. The command makes it easy to archive 
+        project data on Box.
+        
+        {3}{4}Positional arguments:{5}
+          source            File(s) or directories to copy. Remote files 
+                            and directories on Box need to be prefixed 
+                            with 'box:'. 
+                              Example: box:/NCBR_Archive/remote.txt
+          
+          destination       File or directory to copy the source(s) to. 
+                            Remote files and directories on Box need to 
+                            be prefixed with 'box:'.
+                              Example: local.txt
+        {3}{4}Options:{5}
+          -h, --help        Show usage and help information.
+                                Example: --help
+        """.format(styled_name, description, name, c.bold, c.url, c.end, c.italic))
+
+    # Display example usage in epilog
+    cp_epilog = textwrap.dedent("""\
+        {2}{3}Example:{4}
+          # Download a remote file from Box
+          ./{0} cp box:/NCBR_Archive/remote.txt local.txt
+
+          # Upload a local file to Box
+          ./{0} cp local.txt box:/NCBR_Archive/remote.txt 
+
+        {2}{3}Version:{4}
+          {1}
+        """.format(name, __version__, c.bold, c.url, c.end))
+
+    # Supressing help message of required args to overcome no sub-parser named groups
+    subparser_cp = subparsers.add_parser('cp',
+        help = 'Copy files and directories to/from Box.',
+        usage = argparse.SUPPRESS,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        description = required_cp_options,
+        epilog  = cp_epilog,
+        add_help=False
+    )
+
+    # Required Positional Arguments
+    # Source Files/directories 
+    # upload/download to/from Box 
+    subparser_cp.add_argument(
+        'source',
+        nargs = '+',
+        help = argparse.SUPPRESS
+    )
+    # Target files to copy source
+    # files/directories to
+    subparser_cp.add_argument(
+        'destination',
+        nargs = 1,
+        help = argparse.SUPPRESS
+    )
+
+    # Optional Arguments
+    # Add custom help message
+    subparser_cp.add_argument(
+        '-h', '--help', 
+        action='help', 
+        help=argparse.SUPPRESS
+    )
+
+    # Sub-parser for the "mkdir" sub-command
+    required_mkdir_options = textwrap.dedent("""\
+        {0}: {1}
+
+        {3}{4}Synopsis:{5} Makes new directories on Box.
+          $ {2} mkdir [-h] path [path ...]
+
+        Optional arguments are shown in square brackets above.
+
+        {3}{4}Description:{5}
+          Create new directories on Box. This command allows to create
+        new folders or directories on the platform. Folder are useful 
+        for organizing your projects or data into hierarchies.
+        
+        {3}{4}Positional arguments:{5}
+          path              New directories to create on Box. Please 
+                            note remote directories on Box need to be 
+                            prefixed with 'box:'. Parent directories 
+                            that do not exist will be automatically
+                            created on the platform.
+                              Example: box:/$USER/dev
+
+        {3}{4}Options:{5}
+          -h, --help        Show usage and help information.
+                              Example: --help
+        """.format(styled_name, description, name, c.bold, c.url, c.end, c.italic))
+
+    # Display example usage in epilog
+    mkdir_epilog = textwrap.dedent("""\
+        {2}{3}Example:{4}
+          # Create new directory on Box
+          ./{0} mkdir box:/$USER/dev
+
+        {2}{3}Version:{4}
+          {1}
+        """.format(name, __version__, c.bold, c.url, c.end))
+
+    # Supressing help message of required args to overcome no sub-parser named groups
+    subparser_mkdir = subparsers.add_parser(
+        'mkdir',
+        help = 'Make a new directory on Box.',
+        usage = argparse.SUPPRESS,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        description = required_mkdir_options,
+        epilog  = mkdir_epilog,
+        add_help=False
+    )
+
+    # Required Positional Arguments
+    # New directories to create on Box
+    subparser_mkdir.add_argument(
+        'path',
+        nargs = '+',
+        help = argparse.SUPPRESS
+    )
+
+    # Optional Arguments
+    # Add custom help message
+    subparser_mkdir.add_argument(
+        '-h', '--help', 
+        action='help', 
+        help=argparse.SUPPRESS
+    )
+
+    # Sub-parser for the "rm" sub-command
+    required_rm_options = textwrap.dedent("""\
+        {0}: {1}
+
+        {3}{4}Synopsis:{5} Remove files or directories on Box.
+          $ {2} rm [-h] path [path ...]
+
+        Optional arguments are shown in square brackets above.
+
+        {3}{4}Description:{5}
+          Delete files or directories on Box. This command allows you
+        to delete any files or directories from the platform. This is 
+        useful for cleaning up any un-needed files. Please take extreme
+        caution when using this command. 
+        
+        Assume that once a file is deleted, it may not be recoverable!
+        
+        {3}{4}Positional arguments:{5}
+          path              File(s) or directories to delete. Please 
+                            note that remote files and directories on 
+                            Box need to be prefixed with 'box:'.
+                              Example: box:/$USER/file.txt
+
+        {3}{4}Options:{5}
+          -h, --help        Show usage and help information.
+                              Example: --help
+        """.format(styled_name, description, name, c.bold, c.url, c.end, c.italic))
+
+    # Display example usage in epilog
+    rm_epilog = textwrap.dedent("""\
+        {2}{3}Example:{4}
+          # Delete a file on Box
+          ./{0} rm box:/NCBR_Archive/dev/test.txt
+
+        {2}{3}Version:{4}
+          {1}
+        """.format(name, __version__, c.bold, c.url, c.end))
+
+    # Supressing help message of required args to overcome no sub-parser named groups
+    subparser_rm = subparsers.add_parser(
+        'rm',
+        help = 'Remove files or directories on Box.',
+        usage = argparse.SUPPRESS,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        description = required_rm_options,
+        epilog  = rm_epilog,
+        add_help=False
+    )
+
+    # Required Positional Arguments
+    # Ffiles/directories on Box
+    # to delete 
+    subparser_rm.add_argument(
+        'path',
+        nargs = '+',
+        help = argparse.SUPPRESS
+    )
+
+    # Optional Arguments
+    # Add custom help message
+    subparser_rm.add_argument(
+        '-h', '--help', 
+        action='help', 
+        help=argparse.SUPPRESS
+    )
+
+    # Define handlers for each sub-parser
+    subparser_ls.set_defaults(func = ls)
+    subparser_cd.set_defaults(func = cd)
+    subparser_cp.set_defaults(func = cp)
+    subparser_mkdir.set_defaults(func = mkdir)
+    subparser_rm.set_defaults(func = rm)
+
+    # Parse command-line args
+    args = parser.parse_args()
+    return args
+
+
+def main():
+
+    # Sanity check for usage
+    if len(sys.argv) == 1:
+        # Nothing was provided
+        fatal('Invalid usage: {} [-h] [--version] ...'.format(_name))
+
+    # Collect args for sub-command
+    args = parsed_arguments(
+        name = _name,
+        description = _description
+    )
+
+    # Display version information
+    err('{} ({})'.format(_name, __version__))
+
+    # Mediator method to call sub-command's set handler function
+    args.func(args)
+
+
+if __name__ == '__main__':
+    main()
