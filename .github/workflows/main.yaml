@@ -1,0 +1,27 @@
+name: tests
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
+    branches_ignore: []
+
+jobs:
+  Run_Tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - run: pip install --upgrade pip
+      - run: pip install -r requirements.txt
+      - run: ./bx -h
+      - run: ./bx ls -h
+      - run: ./bx cd -h
+      - run: ./bx cp -h
+      - run: ./bx mkdir -h
+      - run: ./bx rm -h
