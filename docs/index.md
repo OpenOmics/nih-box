@@ -16,8 +16,8 @@ Welcome to bx! Before getting started, we highly recommend reading through [bx's
 
 The **`./bx`** command-line tool is composed several inter-related sub commands to explore and archive data across the NIH's Box storage system. Each of the available sub commands perform different functions: 
 
- * [<code>bx <b>ls</b></code>](usage/ls.md): Change Box working directories.
- * [<code>bx <b>cd</b></code>](usage/cd.md): List Box directory contents.
+ * [<code>bx <b>ls</b></code>](usage/ls.md): List Box directory contents. 
+ * [<code>bx <b>cd</b></code>](usage/cd.md): Change Box working directories. 
  * [<code>bx <b>cp</b></code>](usage/cp.md): Copy files and directories to/from Box.
  * [<code>bx <b>mkdir</b></code>](usage/mkdir.md): Make a new directory on Box.
  * [<code>bx <b>rm</b></code>](usage/rm.md): Remove files or directories on Box.
