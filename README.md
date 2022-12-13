@@ -1,6 +1,6 @@
 <div align="center">
    
-  <h1>nih-box 📦</h1>
+  <h1>nih-box 🗃️</h1>
   
   **_Archive projects, metadata, and files at [Box@NIH](https://nih.box.com)_**
 
