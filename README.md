@@ -2,7 +2,7 @@
    
   <h1>nih-box 🗃️</h1>
   
-  **_Archive projects, metadata, and files at [Box@NIH](https://nih.box.com)_**
+  **_Archive, share, and explore projects and files on[Box@NIH](https://nih.box.com)_**
 
   [![tests](https://github.com/OpenOmics/nih-box/workflows/tests/badge.svg)](https://github.com/OpenOmics/nih-box/actions/workflows/main.yaml) [![docs](https://github.com/OpenOmics/nih-box/workflows/docs/badge.svg)](https://github.com/OpenOmics/nih-box/actions/workflows/docs.yml) [![GitHub issues](https://img.shields.io/github/issues/OpenOmics/nih-box?color=brightgreen)](https://github.com/OpenOmics/nih-box/issues)  [![GitHub license](https://img.shields.io/github/license/OpenOmics/nih-box)](https://github.com/OpenOmics/nih-box/blob/main/LICENSE) 
   
