@@ -169,3 +169,7 @@ site/
 test.sh
 test_*/
 tmp_*/
+
+# Virtual environments
+*env/
+**/*env/
