@@ -56,7 +56,7 @@ __authors__ = 'Skyler Kuhn'
 __email__ = 'skyler.kuhn@nih.gov'
 __home__  =  os.path.dirname(os.path.abspath(__file__))
 _name = os.path.basename(sys.argv[0])
-_description = 'Archive and manage data on Box@NIH.'
+_description = 'Archive, share, and explore projects and files on Box@NIH.'
 
 
 def ls(sub_args):
